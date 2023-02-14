@@ -49,15 +49,15 @@ services:
       - 9200:9200
       - 9300:9300
 
-  search-kibana:
-    container_name: search-kibana
-    image: docker.elastic.co/kibana/kibana:7.5.0
-    environment:
-      - ELASTICSEARCH_HOSTS=http://search-elasticsearch:9200
-    ports:
-      - 5601:5601
-    depends_on:
-      - search-elasticsearch
+  # search-kibana:
+  #   container_name: search-kibana
+  #   image: docker.elastic.co/kibana/kibana:7.5.0
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://search-elasticsearch:9200
+  #   ports:
+  #     - 5601:5601
+  #   depends_on:
+  #     - search-elasticsearch
 
 volumes:
   elasticsearch-data:

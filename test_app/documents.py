@@ -21,21 +21,17 @@ class BlogPostDocument(Document):
     #title: fields.TextField(analyzer=autocomplete_analyzer, search_analyzer='standard') # Here I'm trying to use the analyzer specified above <-- This was extremely incorrect, due to the colon in definition, I don't know how I missed it but I did...
     title = fields.TextField(required=True, analyzer=autocomplete_analyzer) # This is it....
     tax = fields.TextField(analyzer=autocomplete_analyzer)
+    amount = fields.TextField(analyzer=autocomplete_analyzer)
 
 
     def prepare_tax(self, instance):
-        # return instance.invoice['tax']
-        # invoice_obj = instance.invoice['tax']
         return instance.invoice['tax']
 
-    invoice = fields.ObjectField()
-    # invoice = fields.ObjectField(
-    #     properties = {
-    #         "amount": fields.TextField(analyzer=autocomplete_analyzer),
-    #         "tax": fields.TextField(analyzer=autocomplete_analyzer),
-    #     }
-    # )
+    def prepare_amount(self, instance):
+        return instance.invoice['amount']
 
+    invoice = fields.ObjectField()
+   
 
     class Index:
         name = 'blogposts'

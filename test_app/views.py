@@ -10,7 +10,7 @@ from elasticsearch_dsl.query import MultiMatch
 
 
 class BlogPostSearch(APIView):
-    @swagger_auto_schema(tags = ['Search blog post'], query_serializer=BlogPostSearchSerializer)
+    @swagger_auto_schema(tags = ['Search data'], query_serializer=BlogPostSearchSerializer)
     def get(self, request):
         serializer = BlogPostSearchSerializer(data = request.GET)
 
@@ -19,7 +19,7 @@ class BlogPostSearch(APIView):
         
         q = serializer.data['query']
 
-        query = MultiMatch(query=q, fields=['title', 'tax'], fuzziness='AUTO')
+        query = MultiMatch(query=q, fields=['title', 'tax', 'description', 'content'], fuzziness='AUTO')
 
         filter_results = BlogPostDocument.search().query(query)
        
@@ -40,7 +40,7 @@ class BlogPostSearch(APIView):
         return Response(data)
     
 
-    @swagger_auto_schema(tags = ["Search blog post"], request_body=BlogPostModelSerializer)
+    @swagger_auto_schema(tags = ["Search data"], request_body=BlogPostModelSerializer)
     def post(self, request):
         serializer = BlogPostModelSerializer(data = request.data)
         if not serializer.is_valid():
